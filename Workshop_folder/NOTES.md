@@ -120,3 +120,27 @@ alt.Chart(delay_chart_data).mark_bar().encode(
     title="Total Minutes Lost by Delay Type"
 )
 ```
+
+## MAKING PIE CHARTS
+```python
+# Clean the data for what you want to make a pie chart on
+injury_status = michigan_laser["injury"].value_counts()
+print(injury_status)
+
+#Make the columns that u want for the pie chart
+injury_percent = (injury_status / injury_status.sum()) * 100
+harm_df = injury_percent.reset_index()
+harm_df.columns = ['injury', 'percentage']
+
+#Initialise the pie chart
+alt.Chart(harm_df).mark_arc().encode(
+    theta=alt.Theta(field="percentage", type="quantitative"),
+    color=alt.Color(field="injury", type="nominal"),
+    tooltip=[
+        alt.Tooltip("injury", title="Harmful?"),
+        alt.Tooltip("percentage", format=".2f")
+    ]
+).properties(
+    title="Percentage of harmful injuries from laser"
+)
+```
