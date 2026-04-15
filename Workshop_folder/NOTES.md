@@ -144,3 +144,11 @@ alt.Chart(harm_df).mark_arc().encode(
     title="Percentage of harmful injuries from laser"
 )
 ```
+## Joining tables
+```python
+# Joins the airport table
+new_laser_report = new_laser_report.merge(
+    airport_df[['airport_id', 'airport_code']],
+    on='airport_code',
+    how='left'
+)```
