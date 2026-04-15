@@ -86,3 +86,37 @@ Initial recovery was facilitated through a horizontal scaling of instances to di
 
 ### 5. Strategic Next Steps
 A formal post-mortem analysis will be conducted to isolate the precise variable responsible for the memory depletion. The timeline for a permanent code-level correction is currently TBD, pending the completion of the diagnostic phase.
+
+## MAKING BAR CHARTS
+```python
+alt.Chart(delay_chart_data).mark_bar().encode(
+    #Y axis settings
+    y=alt.Y( 
+        "delay_type:N",
+        sort="-x",
+        title=None
+    ),
+    #X axis settings
+    x=alt.X(
+        "minutes_lost:Q",
+        title="Total Minutes Lost"
+    ),
+    # colour settings
+    # uses a condition and checks if a column is a highlight, and then colours in a different column
+    color=alt.condition(
+        alt.datum.highlight,
+        alt.value("#d62728"),
+        alt.value("#9ecae1")
+    ),
+    # a tool tip is when hovering you get information on the data
+    tooltip=[
+        alt.Tooltip("delay_type:N", title="Delay Type"),
+        alt.Tooltip("minutes_lost:Q", title="Minutes Lost", format=",")
+    ]
+    # properties of the chart
+).properties(
+    width=700,
+    height=300,
+    title="Total Minutes Lost by Delay Type"
+)
+```
